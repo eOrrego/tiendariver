@@ -1,3 +1,4 @@
+import { Header } from "@/components";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -12,8 +13,11 @@ export default function ShopLayout({ children }: Readonly<{
     children: React.ReactNode;
 }>) {
     return (
-        <main className="m-auto" >
-            {children}
-        </main>
+        <>
+            <Header />
+            <main className="m-auto" >
+                {children}
+            </main>
+        </>
     );
 }

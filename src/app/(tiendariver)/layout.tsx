@@ -6,7 +6,7 @@ export const metadata: Metadata = {
         template: '%s - Tienda River',
         default: 'Tienda River',
     },
-    description: 'Tienda de ropa de River Plate',
+    description: 'Tienda de ropa para el hincha de River Plate',
 };
 
 export default function ShopLayout({ children }: Readonly<{
@@ -15,7 +15,7 @@ export default function ShopLayout({ children }: Readonly<{
     return (
         <>
             <Header />
-            <main className="m-auto" >
+            <main>
                 {children}
             </main>
         </>

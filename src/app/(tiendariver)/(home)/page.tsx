@@ -1,7 +1,7 @@
 export default function Home() {
   return (
     <section>
-      <h1>Tienda River</h1>
+      <h2>Tienda River</h2>
       <p>Tienda de ropa de River Plate</p>
     </section>
   );

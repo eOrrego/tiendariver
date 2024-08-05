@@ -1,17 +1,19 @@
 import Image from "next/image";
 import { FaUser, FaShoppingCart } from "react-icons/fa";
 
-export const Header = () => {
+const logo = "https://tiendariver.vteximg.com.br/arquivos/newLogo_1200x300_rojoynegro.png"
+
+export function Header() {
     return (
         <header className="flex justify-between items-center p-4 bg-white shadow-md">
-            <div className="flex-1"></div>
-            <div className="flex justify-center flex-1">
-                <Image src="https://tiendariver.vteximg.com.br/arquivos/newLogo_1200x300_rojoynegro.png?v=637838351505300000" alt="Tienda River" width={50} height={50} />
+            <div className="flex flex-1 justify-start"></div>
+            <div className="flex flex-1 justify-center">
+                <Image src={logo} alt="Tienda River" width={300} height={75} />
             </div>
-            <div className="flex justify-end items-center flex-1 space-x-4">
-                <FaUser className="text-gray-600" />
-                <FaShoppingCart className="text-gray-600" />
+            <div className="flex flex-1 justify-end items-center space-x-4">
+                <FaUser className="text-black text-2xl" />
+                <FaShoppingCart className="text-black text-2xl" />
             </div>
         </header>
     );
-};
+}

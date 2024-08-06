@@ -1,4 +1,4 @@
-import { Header } from "@/components";
+import { Header, Navbar } from "@/components";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -15,9 +15,10 @@ export default function ShopLayout({ children }: Readonly<{
     return (
         <>
             <Header />
+            <Navbar />
             <main>
                 {children}
-            </main>
+            </main >
         </>
     );
 }

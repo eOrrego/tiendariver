@@ -1,9 +1,11 @@
 import Image from "next/image";
 import { FaUser, FaShoppingCart } from "react-icons/fa";
 
-const logo = "https://tiendariver.vteximg.com.br/arquivos/newLogo_1200x300_rojoynegro.png"
 
 export function Header() {
+
+    const logo = "https://tiendariver.vteximg.com.br/arquivos/newLogo_1200x300_rojoynegro.png"
+
     return (
         <header className="flex justify-between items-center p-4 bg-white shadow-md">
             <div className="flex flex-1 justify-start"></div>

@@ -55,10 +55,10 @@ export const Navbar = () => {
                 {menuItems.map((item) => (
                     <li
                         key={item.name}
-                        className="relative"
+                        className={`relative hover:text-red-500  ${hoveredMenu === item.name ? 'text-red-500' : ''}`}
                         onMouseEnter={() => handleMouseEnter(item.name)}
                     >
-                        <Link href="#" className="text-black text-lg">
+                        <Link href="#" className="text-lg">
                             {item.name}
                         </Link>
                     </li>
@@ -70,7 +70,7 @@ export const Navbar = () => {
                         <div className="flex-1 flex flex-col items-center justify-center">
                             <ul>
                                 {menuItems.find((item) => item.name === hoveredMenu)?.categories.map((category) => (
-                                    <li key={category} className="py-1">
+                                    <li key={category} className="py-3">
                                         <Link href="#" className="text-gray-700">
                                             {category}
                                         </Link>
@@ -79,25 +79,23 @@ export const Navbar = () => {
                             </ul>
                         </div>
                         {menuItems.find((item) => item.name === hoveredMenu)?.image && (
-                            hoveredMenu === 'Oportunidades' ? (
-                                <div className="flex-1 flex items-center justify-center">
-
-                                </div>
-                            ) : (
-                                <div className="flex-1 flex items-center justify-center">
-                                    <Image
-                                        src={menuItems.find((item) => item.name === hoveredMenu)!.image!.src}
-                                        alt={menuItems.find((item) => item.name === hoveredMenu)!.image!.title}
-                                        width={240}
-                                        height={219}
-                                    />
+                            hoveredMenu !== 'Oportunidades' && (
+                                <div className="flex bg-white p-3" style={{ width: '576px', height: '249px' }}>
+                                    <div className="">
+                                        <Image
+                                            src={menuItems.find((item) => item.name === hoveredMenu)!.image!.src}
+                                            alt={menuItems.find((item) => item.name === hoveredMenu)!.image!.title}
+                                            width={240}
+                                            height={219}
+                                        />
+                                    </div>
                                     <div className="flex flex-col justify-center ml-4">
-                                        <h3 className="text-gray-700">
-                                            {menuItems.find((item) => item.name === hoveredMenu)!.image!.title}
+                                        <h3 className="text-gray-700 h-14 w-48">  {menuItems.find((item) => item.name === hoveredMenu)!.image!.title}
                                         </h3>
                                         <Link
                                             href={menuItems.find((item) => item.name === hoveredMenu)!.image!.link}
-                                            className="text-black mt-2 border border-black py-1 px-3 inline-block"
+                                            className="bg-black text-white mt-2 border border-black inline-block"
+                                            style={{ width: '100px', height: '30px', lineHeight: '30px', textAlign: 'center' }}
                                         >
                                             VER MÁS
                                         </Link>

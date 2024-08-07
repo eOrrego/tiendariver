@@ -1,4 +1,4 @@
-import { InfoCards, PublicBanner } from "@/components";
+import { CategoriesBanner, InfoCards, PublicBanner } from "@/components";
 
 export default function Home() {
 
@@ -18,8 +18,7 @@ export default function Home() {
   return (
     <section>
       <InfoCards />
-      <h2>Tienda River</h2>
-      <p>Tienda de ropa de River Plate</p>
+      <CategoriesBanner />
       <PublicBanner images={images} />
     </section>
   );

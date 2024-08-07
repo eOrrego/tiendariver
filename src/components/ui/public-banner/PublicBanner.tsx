@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import Image from 'next/image';
 
 interface PublicBannerProps {
@@ -7,20 +6,25 @@ interface PublicBannerProps {
 
 export const PublicBanner: React.FC<PublicBannerProps> = ({ images }) => {
     return (
-        <div className="flex w-full justify-between">
-            {images.map((image) => (
-                <Link key={image.src} href={image.href}>
-                    <div className="relative group">
-                        <Image
-                            src={image.src}
-                            alt={image.alt}
-                            width={200} // Ajusta el ancho según sea necesario
-                            height={100} // Ajusta la altura según sea necesario
-                            className="transition duration-300 group-hover:scale-110"
-                        />
-                    </div>
-                </Link>
-            ))}
+        <div className="flex justify-center px-48 gap-8 m-5">
+            <div className="relative w-full h-96 transition-transform duration-300 ease-in-out transform hover:scale-90 cursor-pointer">
+                <Image
+                    src={images[0].src}
+                    alt="Nueva Camiseta"
+                    layout="fill"
+                    objectFit="cover"
+                />
+            </div>
+
+
+            <div className="relative w-full h-96 transition-transform duration-300 ease-in-out transform hover:scale-90 cursor-pointer">
+                <Image
+                    src={images[1].src}
+                    alt="Mate y Fútbol"
+                    layout="fill"
+                    objectFit="cover"
+                />
+            </div>
         </div>
     );
 };

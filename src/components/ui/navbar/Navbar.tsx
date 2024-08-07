@@ -65,7 +65,7 @@ export const Navbar = () => {
                 ))}
             </ul>
             {hoveredMenu && (
-                <div className="absolute left-0 top-full w-full bg-gray-100 shadow-lg p-4 flex justify-center transition-all duration-300 ease-in-out transform scale-y-100 origin-top">
+                <div className="absolute left-0 top-full w-full bg-gray-100 shadow-lg p-4 flex justify-center transition-all duration-300 ease-in-out transform scale-y-100 origin-top z-40">
                     <div className="flex max-w-6xl w-full justify-between h-64">
                         <div className="flex-1 flex flex-col items-center justify-center">
                             <ul>

@@ -9,27 +9,27 @@ const menuItems = [
     {
         name: 'Fútbol',
         categories: ['Ediciones Vigentes', 'Ediciones Anteriores', 'Calzados y Medias'],
-        image: { src: 'https://tiendariver.vteximg.com.br/arquivos/futbol_1.jpg', title: 'Indumentaria Oficial de Fútbol', link: '#' },
+        image: { src: 'https://tiendariver.vteximg.com.br/arquivos/futbol_1.jpg', title: 'Indumentaria Oficial de Fútbol', link: '/products' },
     },
     {
         name: 'Entrenamiento',
         categories: ['Camisetas y Musculosas', 'Shorts y Pantalones', 'Abrigos'],
-        image: { src: 'https://tiendariver.vteximg.com.br/arquivos/Entrenamiento.jpg', title: 'Indumentaria Oficial de Entrenamiento', link: '#' },
+        image: { src: 'https://tiendariver.vteximg.com.br/arquivos/Entrenamiento.jpg', title: 'Indumentaria Oficial de Entrenamiento', link: '/products' },
     },
     {
         name: 'Tiempo Libre',
         categories: ['Remeras y Chombas', 'Abrigos', 'Shorts y Pantalones'],
-        image: { src: 'https://tiendariver.vteximg.com.br/arquivos/tiempolibre.jpg', title: 'Tiempo Libre', link: '#' },
+        image: { src: 'https://tiendariver.vteximg.com.br/arquivos/tiempolibre.jpg', title: 'Tiempo Libre', link: '/products' },
     },
     {
         name: 'Productos Oficiales',
         categories: ['Gorras', 'Infantiles', 'Regalos', 'Bazar', 'Librería'],
-        image: { src: 'https://tiendariver.vteximg.com.br/arquivos/productos.jpg', title: 'Producto Oficial', link: '#' },
+        image: { src: 'https://tiendariver.vteximg.com.br/arquivos/productos.jpg', title: 'Producto Oficial', link: '/products' },
     },
     {
         name: 'Oportunidades',
         categories: ['Fútbol', 'Indumentaria', 'Bazar-Accesorios'],
-        image: { src: '/path/to/image5.jpg', title: 'Oportunidades Especiales', link: '#' },
+        image: { src: '/path/to/image5.jpg', title: 'Oportunidades Especiales', link: '/products' },
     },
 ];
 
@@ -58,7 +58,7 @@ export const Navbar = () => {
                         className={`relative hover:text-red-500  ${hoveredMenu === item.name ? 'text-red-500' : ''}`}
                         onMouseEnter={() => handleMouseEnter(item.name)}
                     >
-                        <Link href="#" className="text-lg">
+                        <Link href="/products" className="text-lg">
                             {item.name}
                         </Link>
                     </li>
@@ -71,7 +71,7 @@ export const Navbar = () => {
                             <ul>
                                 {menuItems.find((item) => item.name === hoveredMenu)?.categories.map((category) => (
                                     <li key={category} className="py-3">
-                                        <Link href="#" className="text-gray-700">
+                                        <Link href="/products" className="text-gray-700">
                                             {category}
                                         </Link>
                                     </li>

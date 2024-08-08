@@ -17,7 +17,7 @@ export const Footer = () => {
                     <h4 className="font-bold mb-4">Sobre Tienda River</h4>
                     <ul className="space-y-2">
                         <li>
-                            <Link href="#">
+                            <Link href="/sobre-nosotros">
                                 <span className="text-gray-800 hover:underline cursor-pointer">Nosotros</span>
                             </Link>
                         </li>

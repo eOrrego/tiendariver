@@ -9,3 +9,4 @@ export * from "./ui/public-banner/PublicBanner";
 export * from "./ui/categories-banner/CategoriesBanner";
 
 export * from "./products/product-card/ProductCard";
+export * from "./products/products-banner/ProductsBanner";

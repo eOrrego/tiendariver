@@ -1,4 +1,4 @@
-import { ProductCard } from '@/components';
+import { ProductCard, ProductsBanner } from '@/components';
 import React from 'react';
 
 const products = [
@@ -96,13 +96,18 @@ const products = [
 
 const ProductsPage = () => {
     return (
-        <div className="container mx-auto p-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                {products.map((product) => (
-                    <ProductCard key={product.id} product={product} />
-                ))}
+        <section>
+            <div className='px-16'>
+                <ProductsBanner />
             </div>
-        </div>
+            <div className="container mx-auto p-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                    {products.map((product) => (
+                        <ProductCard key={product.id} product={product} />
+                    ))}
+                </div>
+            </div>
+        </section>
     );
 };
 

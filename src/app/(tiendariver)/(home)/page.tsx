@@ -1,4 +1,4 @@
-import { CategoriesBanner, InfoCards, PublicBanner } from "@/components";
+import { Carousel, CategoriesBanner, InfoCards, PublicBanner } from "@/components";
 
 export default function Home() {
 
@@ -17,6 +17,7 @@ export default function Home() {
 
   return (
     <section>
+      <Carousel />
       <InfoCards />
       <CategoriesBanner />
       <PublicBanner images={images} />

@@ -1,36 +1,18 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Tienda River
 
-## Getting Started
+Tienda River es un proyecto de ecommerce desarrollado utilizando tecnologías modernas para ofrecer una experiencia de compra en línea fluida y atractiva. Este clon de tienda está construido con **Next.js 14**, **TypeScript**, **Tailwind CSS**, y **React Icons** entre otras tecnologías.
 
-First, run the development server:
+## Tecnologías Utilizadas
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Next.js 14**: Framework de React para el desarrollo de aplicaciones web con renderizado en el servidor y generación de sitios estáticos.
+- **TypeScript**: Superset de JavaScript que añade tipado estático para mejorar la robustez y la mantenibilidad del código.
+- **Tailwind CSS**: Framework de utilidades CSS que permite crear interfaces de usuario personalizadas rápidamente.
+- **React Icons**: Biblioteca para incluir iconos en aplicaciones React de manera sencilla.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Instalación
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Clona el repositorio**:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+   ```bash
+   git clone https://github.com/eOrrego/tiendariver.git
+   ```

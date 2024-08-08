@@ -10,3 +10,5 @@ export * from "./ui/categories-banner/CategoriesBanner";
 
 export * from "./products/product-card/ProductCard";
 export * from "./products/products-banner/ProductsBanner";
+export * from "./products/select-sizes/SelectSizes";
+export * from "./products/add-to-cart/AddToCart";

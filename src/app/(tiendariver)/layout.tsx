@@ -1,4 +1,4 @@
-import { Carousel, Footer, Header, Navbar, NewsletterSection } from "@/components";
+import { Footer, Header, Navbar, NewsletterSection } from "@/components";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -16,7 +16,6 @@ export default function ShopLayout({ children }: Readonly<{
         <>
             <Header />
             <Navbar />
-            <Carousel />
             <main>
                 {children}
             </main >

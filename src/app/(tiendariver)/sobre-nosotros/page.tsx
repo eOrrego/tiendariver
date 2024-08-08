@@ -7,9 +7,8 @@ export default function About() {
                 <Image
                     src="https://tiendariver.vteximg.com.br/arquivos/ids/155862/sobre-nosotros_3.png"
                     alt="Banner Sobre Nosotros"
-                    width={1280}
-                    height={277}
-                    className='m-auto'
+                    fill={true}
+                    style={{ objectFit: 'cover' }}
                 />
             </div>
             <div className="max-w-4xl mx-auto p-4">

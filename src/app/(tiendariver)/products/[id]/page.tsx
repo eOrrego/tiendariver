@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { AddToCart, SelectSizes } from '@/components';
 
@@ -30,8 +30,9 @@ const product = {
   `
 };
 
-
 const ProductDetailPage = () => {
+    const [selectedImage, setSelectedImage] = useState(product.images[0]);
+
     const handleSelectSize = (size: string) => {
         console.log('Selected size:', size);
     };
@@ -43,26 +44,26 @@ const ProductDetailPage = () => {
     return (
         <div className="container mx-auto p-4">
             <div className="flex flex-col md:flex-row">
-                <div className="flex flex-col items-center md:w-1/2">
-                    <div className="relative w-full h-96">
-                        <Image
-                            src={product.images[0]}
-                            alt={product.title}
-                            fill
-                            className="object-cover rounded"
-                        />
-                    </div>
-                    <div className="flex space-x-2 mt-4">
-                        {product.images.slice(1).map((image, index) => (
-                            <div key={index} className="relative w-24 h-24">
+                <div className="flex md:w-1/2">
+                    <div className="flex flex-col items-center space-y-2 mr-4">
+                        {product.images.map((image, index) => (
+                            <div key={index} className="relative w-20 h-20 cursor-pointer" onClick={() => setSelectedImage(image)}>
                                 <Image
                                     src={image}
                                     alt={`${product.title} thumbnail ${index + 1}`}
                                     fill
-                                    className="object-cover rounded"
+                                    className="object-cover"
                                 />
                             </div>
                         ))}
+                    </div>
+                    <div className="relative w-full h-96">
+                        <Image
+                            src={selectedImage}
+                            alt={product.title}
+                            fill
+                            className="object-cover"
+                        />
                     </div>
                 </div>
                 <div className="md:w-1/2 md:pl-8">

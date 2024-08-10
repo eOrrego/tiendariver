@@ -1,6 +1,6 @@
 'use client';
 
-import { AddToCart, ProductInfoCards, SelectSizes, ZoomImage } from '@/components';
+import { AddToCart, Breadcrumb, ProductInfoCards, SelectSizes, ZoomImage } from '@/components';
 
 
 const product = {
@@ -29,6 +29,11 @@ const product = {
 };
 
 const ProductDetailPage = () => {
+    const breadcrumbPaths = [
+        { label: 'Home', href: '/' },
+        { label: 'indumentaria', href: '/' },
+        { label: 'abrigos', href: '/' },
+    ];
 
     const handleSelectSize = (size: string) => {
         console.log('Selected size:', size);
@@ -40,6 +45,7 @@ const ProductDetailPage = () => {
 
     return (
         <div className="container mx-auto p-4">
+            <Breadcrumb paths={breadcrumbPaths} />
             <div className="flex flex-col md:flex-row">
                 <ZoomImage images={product.images} />
                 <div className="md:w-1/2 md:pl-8">

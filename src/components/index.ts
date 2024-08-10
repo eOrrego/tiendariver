@@ -12,3 +12,5 @@ export * from "./products/product-card/ProductCard";
 export * from "./products/products-banner/ProductsBanner";
 export * from "./products/select-sizes/SelectSizes";
 export * from "./products/add-to-cart/AddToCart";
+export * from "./products/zoom-image/ZoomImage";
+export * from "./products/product-info-cards/ProductInfoCards";

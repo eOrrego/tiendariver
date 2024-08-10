@@ -7,6 +7,7 @@ export * from "./ui/info-modal/InfoModal";
 export * from "./ui/info-cards/InfoCards";
 export * from "./ui/public-banner/PublicBanner";
 export * from "./ui/categories-banner/CategoriesBanner";
+export * from "./ui/breadcrumb/Breadcrumb";
 
 export * from "./products/product-card/ProductCard";
 export * from "./products/products-banner/ProductsBanner";

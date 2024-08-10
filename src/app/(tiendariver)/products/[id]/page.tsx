@@ -1,8 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
-import Image from 'next/image';
-import { AddToCart, SelectSizes } from '@/components';
+import { AddToCart, ProductInfoCards, SelectSizes, ZoomImage } from '@/components';
 
 
 const product = {
@@ -10,9 +8,9 @@ const product = {
     price: 159.999,
     discountPrice: 143999,
     images: [
-        'https://tiendariver.vteximg.com.br/arquivos/hombre_DESK.png',
-        'https://tiendariver.vteximg.com.br/arquivos/hombre_DESK.png',
-        'https://tiendariver.vteximg.com.br/arquivos/hombre_DESK.png',
+        'https://tiendariver.vteximg.com.br/arquivos/ids/171699-500-500/IP9653-Campera_Deportiva_Tejida_River_Plate_Negro-F.png',
+        'https://tiendariver.vteximg.com.br/arquivos/ids/171731-500-500/IP9653-Campera_Deportiva_Tejida_River_Plate_Negro-B.png',
+        'https://tiendariver.vteximg.com.br/arquivos/ids/171732-500-500/IP9653-Campera_Deportiva_Tejida_River_Plate_Negro-D1.png',
     ],
     description: `
     -Animá al River Plate con estilo.
@@ -31,7 +29,6 @@ const product = {
 };
 
 const ProductDetailPage = () => {
-    const [selectedImage, setSelectedImage] = useState(product.images[0]);
 
     const handleSelectSize = (size: string) => {
         console.log('Selected size:', size);
@@ -44,34 +41,14 @@ const ProductDetailPage = () => {
     return (
         <div className="container mx-auto p-4">
             <div className="flex flex-col md:flex-row">
-                <div className="flex md:w-1/2">
-                    <div className="flex flex-col items-center space-y-2 mr-4">
-                        {product.images.map((image, index) => (
-                            <div key={index} className="relative w-20 h-20 cursor-pointer" onClick={() => setSelectedImage(image)}>
-                                <Image
-                                    src={image}
-                                    alt={`${product.title} thumbnail ${index + 1}`}
-                                    fill
-                                    className="object-cover"
-                                />
-                            </div>
-                        ))}
-                    </div>
-                    <div className="relative w-full h-96">
-                        <Image
-                            src={selectedImage}
-                            alt={product.title}
-                            fill
-                            className="object-cover"
-                        />
-                    </div>
-                </div>
+                <ZoomImage images={product.images} />
                 <div className="md:w-1/2 md:pl-8">
                     <h1 className="text-3xl font-bold">{product.title}</h1>
                     <div className="text-red-600 text-2xl font-bold mt-2">${product.price}</div>
                     <div className="text-gray-600 text-sm line-through mt-1">Precio exclusivo socios ${product.discountPrice}</div>
                     <SelectSizes onSelectSize={handleSelectSize} />
                     <AddToCart onAddToCart={handleAddToCart} />
+                    <ProductInfoCards />
                 </div>
             </div>
             <div className="mt-8">

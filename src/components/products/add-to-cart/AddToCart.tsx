@@ -21,7 +21,7 @@ export const AddToCart: React.FC<AddToCartProps> = ({ onAddToCart }) => {
                     <span className="px-4 py-2">{quantity}</span>
                     <button onClick={() => handleQuantityChange(1)} className="px-4 py-2">+</button>
                 </div>
-                <button onClick={() => onAddToCart(quantity)} className=" bg-black text-white ml-8 px-6 py-2">
+                <button onClick={() => onAddToCart(quantity)} className=" bg-black text-white ml-8 px-6 py-2 hover:bg-red-500 transition-colors duration-300 ease-in-out">
                     Agregar al carrito
                 </button>
             </div>

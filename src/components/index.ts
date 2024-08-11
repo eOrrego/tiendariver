@@ -15,3 +15,5 @@ export * from "./products/select-sizes/SelectSizes";
 export * from "./products/add-to-cart/AddToCart";
 export * from "./products/zoom-image/ZoomImage";
 export * from "./products/product-info-cards/ProductInfoCards";
+export * from "./products/popover-info/PopoverInfo";
+export * from "./products/favorite-product/FavoriteProduct";

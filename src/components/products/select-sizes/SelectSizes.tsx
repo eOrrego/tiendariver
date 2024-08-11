@@ -9,22 +9,33 @@ interface SelectSizesProps {
 const sizes = ['XS', 'S', 'M', 'L', 'XL', '2XL'];
 
 export const SelectSizes: React.FC<SelectSizesProps> = ({ onSelectSize }) => {
-    const [selectedSize, setSelectedSize] = useState(null);
+    const [selectedSize, setSelectedSize] = useState<string | null>(null);
 
-    const handleSelectSize = (size: any) => {
+    const handleSelectSize = (size: string) => {
         setSelectedSize(size);
-        onSelectSize(size);
+        if (onSelectSize) {
+            onSelectSize(size);
+        }
     };
 
     return (
-        <div>
-            <div className="text-lg font-semibold mb-2">Talles disponibles</div>
-            <div className="flex space-x-2">
+        <div className="mt-4">
+            <h3 className="text-lg font-semibold mb-2">Talles disponibles</h3>
+            <div className="flex space-x-4">
                 {sizes.map((size) => (
                     <button
                         key={size}
                         onClick={() => handleSelectSize(size)}
-                        className={`p-2 border rounded-full ${selectedSize === size ? 'border-red-600 text-red-600' : 'border-gray-300 text-gray-600'}`}
+                        className={`w-10 h-10 flex items-center justify-center rounded-full border 
+              ${selectedSize === size
+                                ? 'border-red-500 text-red-500'
+                                : 'border-gray-300 text-gray-500'
+                            } 
+              ${size === '2XL'
+                                ? 'text-gray-300 border-gray-300 cursor-not-allowed'
+                                : 'hover:border-black hover:text-black'
+                            } transition-colors duration-300 ease-in-out`}
+                        disabled={size === '2XL'}
                     >
                         {size}
                     </button>

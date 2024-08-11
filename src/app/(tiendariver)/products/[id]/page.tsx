@@ -1,9 +1,10 @@
 'use client';
 
-import { AddToCart, Breadcrumb, ProductInfoCards, SelectSizes, ZoomImage } from '@/components';
+import { AddToCart, Breadcrumb, FavoriteProduct, PopoverInfo, ProductInfoCards, SelectSizes, ZoomImage } from '@/components';
 
 
 const product = {
+    id: '1',
     title: 'Campera Deportiva Tejida River Plate',
     price: 159.999,
     discountPrice: 143999,
@@ -12,6 +13,8 @@ const product = {
         'https://tiendariver.vteximg.com.br/arquivos/ids/171731-500-500/IP9653-Campera_Deportiva_Tejida_River_Plate_Negro-B.png',
         'https://tiendariver.vteximg.com.br/arquivos/ids/171732-500-500/IP9653-Campera_Deportiva_Tejida_River_Plate_Negro-D1.png',
     ],
+    category: 'Indumentaria',
+    subcategory: 'Abrigos',
     description: `
     -Animá al River Plate con estilo.
     -Esta campera deportiva de fútbol adidas se destaca con toques de color y un escudo del club bordado.
@@ -25,14 +28,28 @@ const product = {
     -Bolsillos frontales con cierre.
     -Puños y dobladillo elásticos.
     -Escudo bordado del River Plate.
-  `
+  `,
+    promotions: [
+        {
+            logo: 'https://tiendariver.vteximg.com.br/arquivos/AmericanExpress-river.png',
+            text: '3 cuotas sin interés de $53.333',
+        },
+        {
+            logo: 'https://tiendariver.vteximg.com.br/arquivos/Visa-river.png',
+            text: '3 cuotas sin interés de $53.333',
+        },
+        {
+            logo: 'https://tiendariver.vteximg.com.br/arquivos/Mastercard-river.png',
+            text: '3 cuotas sin interés de $53.333',
+        },
+    ],
 };
 
 const ProductDetailPage = () => {
     const breadcrumbPaths = [
         { label: 'Home', href: '/' },
-        { label: 'indumentaria', href: '/' },
-        { label: 'abrigos', href: '/' },
+        { label: product.category, href: '/' },
+        { label: product.subcategory, href: '/' },
     ];
 
     const handleSelectSize = (size: string) => {
@@ -49,9 +66,16 @@ const ProductDetailPage = () => {
             <div className="flex flex-col md:flex-row">
                 <ZoomImage images={product.images} />
                 <div className="md:px-8 m-auto">
-                    <h1 className="text-3xl font-bold">{product.title}</h1>
+                    <div className="flex items-center justify-between">
+                        <h1 className="text-3xl font-bold">{product.title}</h1>
+                        <FavoriteProduct productId={product.id} initialFavorite={false} />
+                    </div>
                     <div className="text-red-600 text-2xl font-bold mt-2">${product.price}</div>
                     <div className="text-gray-600 text-sm line-through mt-1">Precio exclusivo socios ${product.discountPrice}</div>
+                    <PopoverInfo
+                        title="¡Mirá nuestra promociones bancarias y formas de pago!"
+                        info={product.promotions}
+                    />
                     <SelectSizes onSelectSize={handleSelectSize} />
                     <AddToCart onAddToCart={handleAddToCart} />
                     <ProductInfoCards />

@@ -6,22 +6,22 @@ import { FaCreditCard, FaSyncAlt, FaTruck, FaBoxOpen } from 'react-icons/fa';
 
 const cardData = [
     {
-        icon: <FaCreditCard className="text-4xl text-black" />,
+        icon: <FaCreditCard className="text-4xl" />,
         title: 'Cuotas y Formas de Pago',
         modalContent: 'Promo 25% OFF Tarjeta BBVA River...'
     },
     {
-        icon: <FaSyncAlt className="text-4xl text-black" />,
+        icon: <FaSyncAlt className="text-4xl" />,
         title: 'Cambios y Devoluciones',
         modalContent: 'Se aplican condiciones para el primer cambio gratis...'
     },
     {
-        icon: <FaTruck className="text-4xl text-black" />,
+        icon: <FaTruck className="text-4xl" />,
         title: 'Tiempos y Costos de Envío',
         modalContent: 'Realizamos envíos a todo el país bajo ciertas condiciones...'
     },
     {
-        icon: <FaBoxOpen className="text-4xl text-black" />,
+        icon: <FaBoxOpen className="text-4xl" />,
         title: 'Cambios Puerta a Puerta',
         modalContent: 'Puedes realizar cambios puerta a puerta bajo ciertas condiciones...'
     },
@@ -45,11 +45,11 @@ export const ProductInfoCards = () => {
             {cardData.map((card, index) => (
                 <div
                     key={index}
-                    className="flex flex-col items-center cursor-pointer text-center"
+                    className="flex flex-col items-center cursor-pointer text-center hover:text-red-500 transition-colors duration-300 ease-in-out"
                     onClick={() => openModal(card.title, card.modalContent)}
                 >
                     <div>{card.icon}</div>
-                    <h3 className="text-sm text-black mt-2">{card.title}</h3>
+                    <h3 className="text-sm mt-2">{card.title}</h3>
                 </div>
             ))}
             <InfoModal

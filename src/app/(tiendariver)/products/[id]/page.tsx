@@ -48,7 +48,7 @@ const ProductDetailPage = () => {
             <Breadcrumb paths={breadcrumbPaths} />
             <div className="flex flex-col md:flex-row">
                 <ZoomImage images={product.images} />
-                <div className="md:pl-8">
+                <div className="md:px-8 m-auto">
                     <h1 className="text-3xl font-bold">{product.title}</h1>
                     <div className="text-red-600 text-2xl font-bold mt-2">${product.price}</div>
                     <div className="text-gray-600 text-sm line-through mt-1">Precio exclusivo socios ${product.discountPrice}</div>

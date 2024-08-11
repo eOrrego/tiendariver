@@ -58,7 +58,7 @@ const ProductDetailPage = () => {
                 </div>
             </div>
             <div className="mt-8">
-                <h2 className="text-2xl font-bold mb-2">Descripción</h2>
+                <h2 className="text-2xl font-bold pb-3 mb-4 border-b-[1px] border-red-500 ">Descripción</h2>
                 <p className="whitespace-pre-line">{product.description}</p>
             </div>
         </div>

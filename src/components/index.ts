@@ -17,3 +17,4 @@ export * from "./products/zoom-image/ZoomImage";
 export * from "./products/product-info-cards/ProductInfoCards";
 export * from "./products/popover-info/PopoverInfo";
 export * from "./products/favorite-product/FavoriteProduct";
+export * from "./products/popover-cart/PopoverCart";

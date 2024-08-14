@@ -1,4 +1,4 @@
-# Tienda River
+# Tienda River (por el momento con data Mock)
 
 Tienda River es un proyecto de ecommerce desarrollado utilizando tecnologías modernas para ofrecer una experiencia de compra en línea fluida y atractiva. Este clon de tienda está construido con **Next.js 14**, **TypeScript**, **Tailwind CSS**, y **React Icons** entre otras tecnologías.
 

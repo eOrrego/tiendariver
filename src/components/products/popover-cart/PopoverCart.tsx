@@ -2,6 +2,7 @@
 
 import { FaTrashAlt } from "react-icons/fa";
 import Image from "next/image";
+import Link from "next/link";
 
 interface Product {
     id: number;
@@ -66,9 +67,9 @@ export function PopoverCart({ onClose }: Readonly<PopoverCartProps>) {
                         Subtotal: $
                         {mockCartProducts.reduce((total, product) => total + product.price * product.quantity, 0).toLocaleString()}
                     </p>
-                    <button className="w-full bg-black text-white py-2 mt-4 rounded">
-                        Finalizar Compra
-                    </button>
+                    <Link href="/cart" className="w-full bg-black text-white py-2 mt-2 rounded block text-center">
+                        Ir al Carrito
+                    </Link>
                     <button className="w-full bg-red-600 text-white py-2 mt-2 rounded" onClick={onClose}>
                         Vaciar Carrito
                     </button>

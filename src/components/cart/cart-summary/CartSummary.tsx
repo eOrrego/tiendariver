@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import React from 'react';
 
 interface CartSummaryProps {
@@ -51,12 +52,14 @@ export const CartSummary: React.FC<CartSummaryProps> = ({
                 <hr className="my-4" />
                 <p className="text-xl font-semibold">Total: ${total}</p>
             </div>
-            <button className="w-full bg-red-600 text-white py-2 rounded">
-                INICIAR PAGO
-            </button>
-            <p className="text-center text-gray-500 mt-4 cursor-pointer">
-                &lt; Seguir comprando
-            </p>
+            <Link href="/checkout" passHref>
+                <button className="w-full bg-red-600 text-white py-2 rounded">
+                    Comprar
+                </button>
+            </Link>
+            <Link href="/products" className="block text-center mt-4 text-red-600">
+                Seguir comprando
+            </Link>
         </div>
     );
 };

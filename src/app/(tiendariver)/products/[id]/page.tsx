@@ -10,6 +10,7 @@ import {
     SelectSizes,
     ZoomImage,
 } from '@/components';
+import { useCartStore } from '@/store/CartStore';
 
 interface Product {
     id: string;
@@ -22,6 +23,7 @@ interface Product {
     description: string;
 }
 
+// Promociones mock, puedes ajustar o eliminar si las obtienes de la API
 const arrayPromotions = {
     promotions: [
         {
@@ -41,6 +43,7 @@ const arrayPromotions = {
 
 const ProductDetailPage = ({ params }: { params: { id: string } }) => {
     const [product, setProduct] = useState<Product | null>(null);
+    const addToCart = useCartStore((state) => state.addToCart); // Obtén la función addToCart del store
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -69,6 +72,20 @@ const ProductDetailPage = ({ params }: { params: { id: string } }) => {
         { label: product.subcategory, href: '/' },
     ];
 
+
+    const handleAddToCart = (quantity: number) => {
+        addToCart(
+            {
+                id: product.id,
+                title: product.title,
+                price: product.price,
+                image: product.images[0],
+                quantity,
+            },
+            quantity
+        );
+    };
+
     return (
         <div className="container mx-auto p-4">
             <Breadcrumb paths={breadcrumbPaths} />
@@ -85,7 +102,7 @@ const ProductDetailPage = ({ params }: { params: { id: string } }) => {
                     </div>
                     <PopoverInfo title="¡Mirá nuestra promociones bancarias y formas de pago!" info={arrayPromotions.promotions} />
                     <SelectSizes onSelectSize={() => { }} />
-                    <AddToCart onAddToCart={() => { }} />
+                    <AddToCart onAddToCart={handleAddToCart} />
                     <ProductInfoCards />
                 </div>
             </div>

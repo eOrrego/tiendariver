@@ -24,7 +24,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
     return (
         <div className="p-4">
             {/* Link de prueba para redireccionar a la página de detalle del producto */}
-            <Link href={`/products/asd`}>
+            <Link href={`/products/${product.id}`}>
                 <div
                     className="relative cursor-pointer"
                     onMouseEnter={() => setIsHovered(true)}

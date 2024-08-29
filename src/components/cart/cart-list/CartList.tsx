@@ -5,9 +5,9 @@ import { FaTrash } from 'react-icons/fa';
 import Image from 'next/image';
 
 interface CartItem {
-    id: number;
+    id: string;
     title: string;
-    size: string;
+    size?: string;
     price: number;
     quantity: number;
     image: string;
@@ -15,9 +15,9 @@ interface CartItem {
 
 interface CartListProps {
     items: CartItem[];
-    onIncrement: (id: number) => void;
-    onDecrement: (id: number) => void;
-    onRemove: (id: number) => void;
+    onIncrement: (id: string) => void;
+    onDecrement: (id: string) => void;
+    onRemove: (id: string) => void;
     onClearCart: () => void;
 }
 

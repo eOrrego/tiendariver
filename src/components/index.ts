@@ -18,7 +18,9 @@ export * from "./products/product-info-cards/ProductInfoCards";
 export * from "./products/popover-info/PopoverInfo";
 export * from "./products/favorite-product/FavoriteProduct";
 export * from "./products/popover-cart/PopoverCart";
-export * from "./products/product-cart-skeleton/ProductCardSkeleton";
+export * from "./products/product-card-skeleton/ProductCardSkeleton";
+export * from "./products/product-detail-skeleton/ProductSkeleton";
+export * from "./products/product-detail/ProductDetail";
 
 export * from "./cart/cart-list/CartList";
 export * from "./cart/cart-summary/CartSummary";

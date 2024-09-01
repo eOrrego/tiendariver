@@ -1,38 +1,44 @@
-// src/store/cartStore.ts
 'use client';
 
 import { create } from 'zustand';
 
-// Definición de la interfaz del producto
-interface Product {
+// Definición de la interfaz del producto en el carrito
+interface CartProduct {
     id: string;
     title: string;
     price: number;
     image: string;
     quantity: number;
+    size: string; // Talla del producto
 }
 
 // Definición de la interfaz del estado del carrito y las acciones
 interface CartState {
-    cart: Product[];
-    addToCart: (product: Product, quantity: number) => void;
-    incrementQuantity: (id: string) => void;
-    decrementQuantity: (id: string) => void;
-    removeFromCart: (id: string) => void;
+    cart: CartProduct[];
+    addToCart: (product: CartProduct, quantity: number) => void;
+    incrementQuantity: (id: string, size: string) => void;
+    decrementQuantity: (id: string, size: string) => void;
+    removeFromCart: (id: string, size: string) => void;
     clearCart: () => void;
 }
+
 
 // Creación del store del carrito
 export const useCartStore = create<CartState>((set, get) => ({
     cart: [],
 
-    // Función para agregar productos al carrito
+    // Función para agregar productos al carrito con su talla
     addToCart: (product, quantity) => {
-        const existingProduct = get().cart.find((item) => item.id === product.id);
+        const existingProduct = get().cart.find(
+            (item) => item.id === product.id && item.size === product.size
+        );
+
         if (existingProduct) {
             set({
                 cart: get().cart.map((item) =>
-                    item.id === product.id ? { ...item, quantity: item.quantity + quantity } : item
+                    item.id === product.id && item.size === product.size
+                        ? { ...item, quantity: item.quantity + quantity }
+                        : item
                 ),
             });
         } else {
@@ -42,30 +48,32 @@ export const useCartStore = create<CartState>((set, get) => ({
         }
     },
 
-    // Función para incrementar la cantidad de un producto
-    incrementQuantity: (id) => {
+    // Función para incrementar la cantidad de un producto por talla
+    incrementQuantity: (id, size) => {
         set({
             cart: get().cart.map((item) =>
-                item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+                item.id === id && item.size === size
+                    ? { ...item, quantity: item.quantity + 1 }
+                    : item
             ),
         });
     },
 
-    // Función para decrementar la cantidad de un producto
-    decrementQuantity: (id) => {
+    // Función para decrementar la cantidad de un producto por talla
+    decrementQuantity: (id, size) => {
         set({
             cart: get().cart.map((item) =>
-                item.id === id && item.quantity > 1
+                item.id === id && item.size === size && item.quantity > 1
                     ? { ...item, quantity: item.quantity - 1 }
                     : item
             ),
         });
     },
 
-    // Función para eliminar un producto del carrito
-    removeFromCart: (id) => {
+    // Función para eliminar un producto del carrito según talla
+    removeFromCart: (id, size) => {
         set({
-            cart: get().cart.filter((item) => item.id !== id),
+            cart: get().cart.filter((item) => item.id !== id || item.size !== size),
         });
     },
 

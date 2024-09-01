@@ -1,23 +1,21 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-
 import { ProductCard, ProductsBanner } from '@/components';
 
 interface Product {
-    id: number;
-    category: string;
+    id: string;
     title: string;
     price: number;
     discountPrice: number;
-    image1: string;
-    image2: string;
+    images: string[];
+    category: string;
+    subcategory: string;
+    description: string;
     isNew: boolean;
 }
 
 const ProductsPage = () => {
-
-
     const [productsApi, setProductsApi] = useState<Product[]>([]);
 
     useEffect(() => {

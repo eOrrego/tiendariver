@@ -3,17 +3,10 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Product } from '@/types/product.interface';
 
 interface ProductCardProps {
-    product: {
-        id: string;
-        title: string;
-        category: string;
-        price: number;
-        discountPrice: number;
-        images: string[];
-        isNew: boolean;
-    };
+    product: Product;
 }
 
 export const ProductCard = ({ product }: ProductCardProps) => {

@@ -1,3 +1,5 @@
+'use client';
+
 import {
     AddToCart,
     Breadcrumb,
@@ -7,19 +9,14 @@ import {
     SelectSizes,
     ZoomImage,
 } from '@/components';
+
 import { useCartStore } from '@/store/CartStore';
 
+import { useState } from 'react';
+import { Product } from '@/types/product.interface';
+
 interface ProductDetailProps {
-    product: {
-        id: string;
-        title: string;
-        price: number;
-        discountPrice: number;
-        images: string[];
-        category: string;
-        subcategory: string;
-        description: string;
-    };
+    product: Product;
 }
 
 // Promociones mock, puedes ajustar o eliminar si las obtienes de la API
@@ -42,6 +39,7 @@ const arrayPromotions = {
 
 export const ProductDetail = ({ product }: ProductDetailProps) => {
     const addToCart = useCartStore((state) => state.addToCart);
+    const [selectedSize, setSelectedSize] = useState<string | null>(null);
 
     const breadcrumbPaths = [
         { label: 'Home', href: '/' },
@@ -50,13 +48,25 @@ export const ProductDetail = ({ product }: ProductDetailProps) => {
     ];
 
     const handleAddToCart = (quantity: number) => {
+        if (!selectedSize) {
+            alert('Por favor selecciona un talle.');
+            return;
+        }
+
+        const stockAvailable = product.sizes[selectedSize as keyof typeof product.sizes];
+        if (quantity > stockAvailable) {
+            alert('Stock insuficiente para la cantidad seleccionada.');
+            return;
+        }
+
         addToCart(
             {
                 id: product.id,
-                title: product.title,
+                title: `${product.title} - Talle: ${selectedSize}`,
                 price: product.price,
                 image: product.images[0],
                 quantity,
+                size: selectedSize,
             },
             quantity
         );
@@ -77,7 +87,7 @@ export const ProductDetail = ({ product }: ProductDetailProps) => {
                         Precio exclusivo socios ${product.discountPrice}
                     </div>
                     <PopoverInfo title="¡Mirá nuestra promociones bancarias y formas de pago!" info={arrayPromotions.promotions} />
-                    <SelectSizes onSelectSize={() => { }} />
+                    <SelectSizes sizes={product.sizes} onSelectSize={setSelectedSize} />
                     <AddToCart onAddToCart={handleAddToCart} />
                     <ProductInfoCards />
                 </div>

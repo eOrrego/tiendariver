@@ -2,19 +2,7 @@
 
 import { useEffect, useState, Suspense } from 'react';
 import { ProductsBanner, ProductCardSkeleton, ProductCard } from '@/components';
-
-
-interface Product {
-    id: string;
-    title: string;
-    price: number;
-    discountPrice: number;
-    images: string[];
-    category: string;
-    subcategory: string;
-    description: string;
-    isNew: boolean;
-}
+import { Product } from '@/types/product.interface';
 
 const ProductsPage = () => {
     const [productsApi, setProductsApi] = useState<Product[]>([]);

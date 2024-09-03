@@ -7,7 +7,7 @@ import Image from 'next/image';
 interface CartItem {
     id: string;
     title: string;
-    size?: string;
+    size: string; // Añadimos la talla para identificar correctamente
     price: number;
     quantity: number;
     image: string;
@@ -15,9 +15,9 @@ interface CartItem {
 
 interface CartListProps {
     items: CartItem[];
-    onIncrement: (id: string) => void;
-    onDecrement: (id: string) => void;
-    onRemove: (id: string) => void;
+    onIncrement: (id: string, size: string) => void;
+    onDecrement: (id: string, size: string) => void;
+    onRemove: (id: string, size: string) => void;
     onClearCart: () => void;
 }
 
@@ -31,7 +31,7 @@ export const CartList: React.FC<CartListProps> = ({
     return (
         <div className="bg-white p-6 rounded-lg shadow-md">
             {items.map((item) => (
-                <div key={item.id} className="flex justify-between items-center mb-4">
+                <div key={`${item.id}-${item.size}`} className="flex justify-between items-center mb-4">
                     <div className="flex items-center">
                         <Image src={item.image} alt={item.title} width={80} height={80} />
                         <div className="ml-4">
@@ -43,14 +43,14 @@ export const CartList: React.FC<CartListProps> = ({
                         <div className="flex items-center border rounded">
                             <button
                                 className="px-2 py-1 text-gray-700 hover:bg-gray-100"
-                                onClick={() => onDecrement(item.id)}
+                                onClick={() => onDecrement(item.id, item.size)} // Ajuste para manejar talla
                             >
                                 -
                             </button>
                             <span className="px-4">{item.quantity}</span>
                             <button
                                 className="px-2 py-1 text-gray-700 hover:bg-gray-100"
-                                onClick={() => onIncrement(item.id)}
+                                onClick={() => onIncrement(item.id, item.size)} // Ajuste para manejar talla
                             >
                                 +
                             </button>
@@ -60,7 +60,7 @@ export const CartList: React.FC<CartListProps> = ({
                         </div>
                         <button
                             className="ml-4 text-red-500 hover:text-red-700"
-                            onClick={() => onRemove(item.id)}
+                            onClick={() => onRemove(item.id, item.size)} // Ajuste para manejar talla
                         >
                             <FaTrash />
                         </button>

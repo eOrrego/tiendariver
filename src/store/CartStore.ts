@@ -12,6 +12,7 @@ interface CartProduct {
     size: string; // Talla del producto
 }
 
+
 // Definición de la interfaz del estado del carrito y las acciones
 interface CartState {
     cart: CartProduct[];
@@ -34,6 +35,7 @@ export const useCartStore = create<CartState>((set, get) => ({
         );
 
         if (existingProduct) {
+            // Verifica si ya existe el mismo producto con el mismo id y talle
             set({
                 cart: get().cart.map((item) =>
                     item.id === product.id && item.size === product.size
@@ -42,6 +44,7 @@ export const useCartStore = create<CartState>((set, get) => ({
                 ),
             });
         } else {
+            // Añade el nuevo producto al carrito
             set({
                 cart: [...get().cart, { ...product, quantity }],
             });

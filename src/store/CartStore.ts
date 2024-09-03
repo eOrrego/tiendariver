@@ -23,10 +23,23 @@ interface CartState {
     clearCart: () => void;
 }
 
+// Helper para sincronizar con localStorage
+const saveCartToLocalStorage = (cart: CartProduct[]) => {
+    localStorage.setItem('cart', JSON.stringify(cart));
+};
+
+// Obtener el carrito desde localStorage
+const getCartFromLocalStorage = (): CartProduct[] => {
+    if (typeof window !== 'undefined') {
+        const storedCart = localStorage.getItem('cart');
+        return storedCart ? JSON.parse(storedCart) : [];
+    }
+    return [];
+};
 
 // Creación del store del carrito
 export const useCartStore = create<CartState>((set, get) => ({
-    cart: [],
+    cart: getCartFromLocalStorage(),
 
     // Función para agregar productos al carrito con su talla
     addToCart: (product, quantity) => {
@@ -35,7 +48,6 @@ export const useCartStore = create<CartState>((set, get) => ({
         );
 
         if (existingProduct) {
-            // Verifica si ya existe el mismo producto con el mismo id y talle
             set({
                 cart: get().cart.map((item) =>
                     item.id === product.id && item.size === product.size
@@ -44,11 +56,12 @@ export const useCartStore = create<CartState>((set, get) => ({
                 ),
             });
         } else {
-            // Añade el nuevo producto al carrito
             set({
                 cart: [...get().cart, { ...product, quantity }],
             });
         }
+
+        saveCartToLocalStorage(get().cart);
     },
 
     // Función para incrementar la cantidad de un producto por talla
@@ -60,6 +73,8 @@ export const useCartStore = create<CartState>((set, get) => ({
                     : item
             ),
         });
+
+        saveCartToLocalStorage(get().cart);
     },
 
     // Función para decrementar la cantidad de un producto por talla
@@ -71,6 +86,8 @@ export const useCartStore = create<CartState>((set, get) => ({
                     : item
             ),
         });
+
+        saveCartToLocalStorage(get().cart);
     },
 
     // Función para eliminar un producto del carrito según talla
@@ -78,10 +95,13 @@ export const useCartStore = create<CartState>((set, get) => ({
         set({
             cart: get().cart.filter((item) => item.id !== id || item.size !== size),
         });
+
+        saveCartToLocalStorage(get().cart);
     },
 
     // Función para vaciar todo el carrito
     clearCart: () => {
         set({ cart: [] });
+        localStorage.removeItem('cart');
     },
 }));

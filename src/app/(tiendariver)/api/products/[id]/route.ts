@@ -11,7 +11,10 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
             return NextResponse.json({ error: 'Product not found' }, { status: 404 });
         }
 
-        return NextResponse.json(docSnap.data());
+        // Incluye el id en los datos de respuesta
+        const productData = { id: docSnap.id, ...docSnap.data() };
+
+        return NextResponse.json(productData);
     } catch (error) {
         return NextResponse.json({ error: 'Failed to fetch product' }, { status: 500 });
     }

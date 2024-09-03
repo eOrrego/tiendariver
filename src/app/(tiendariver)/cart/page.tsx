@@ -20,9 +20,9 @@ const CartPage = () => {
             <div className="w-full md:w-2/3">
                 <CartList
                     items={cart}
-                    onIncrement={incrementQuantity}
-                    onDecrement={decrementQuantity}
-                    onRemove={removeFromCart}
+                    onIncrement={(id, size) => incrementQuantity(id, size)} // Ajuste para manejar talla
+                    onDecrement={(id, size) => decrementQuantity(id, size)} // Ajuste para manejar talla
+                    onRemove={(id, size) => removeFromCart(id, size)} // Ajuste para manejar talla
                     onClearCart={clearCart}
                 />
             </div>

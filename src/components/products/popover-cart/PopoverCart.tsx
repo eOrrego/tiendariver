@@ -5,7 +5,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useCartStore } from '@/store/CartStore';
 
-export function PopoverCart({ onClose }: { readonly onClose: () => void }) {
+interface PopoverCartProps {
+    onClose: () => void;
+}
+
+export function PopoverCart({ onClose }: Readonly<PopoverCartProps>) {
     const { cart, removeFromCart, clearCart } = useCartStore();
 
     return (
@@ -18,12 +22,14 @@ export function PopoverCart({ onClose }: { readonly onClose: () => void }) {
                     </button>
                 </div>
                 <div className="divide-y divide-gray-200">
-                    {cart.map((product) => (
-                        <div key={product.id} className="py-4 flex justify-between items-center">
+                    {cart.map((product, index) => (
+                        // Usamos index para evitar conflictos con el mismo id pero diferente talla
+                        <div key={`${product.id}-${product.size}-${index}`} className="py-4 flex justify-between items-center">
                             <div className="flex items-center">
                                 <Image src={product.image} alt={product.title} width={50} height={50} />
                                 <div className="ml-4">
                                     <p className="font-semibold">{product.title}</p>
+                                    <p className="text-gray-500">Talla: {product.size}</p> {/* Mostrar talla */}
                                     <p className="text-gray-500">Cantidad: {product.quantity}</p>
                                 </div>
                             </div>
@@ -31,7 +37,7 @@ export function PopoverCart({ onClose }: { readonly onClose: () => void }) {
                                 <p className="font-semibold">${(product.price * product.quantity).toLocaleString()}</p>
                                 <button
                                     className="text-red-600 hover:text-red-800 mt-2"
-                                    onClick={() => removeFromCart(product.id)}
+                                    onClick={() => removeFromCart(product.id, product.size)}
                                 >
                                     <FaTrashAlt />
                                 </button>

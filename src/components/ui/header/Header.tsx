@@ -1,23 +1,21 @@
 'use client';
 
-import { PopoverCart } from "@/components";
+import { PopoverCart, PopoverUser } from "@/components";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { FaUser, FaShoppingCart } from "react-icons/fa";
+import { FaShoppingCart } from "react-icons/fa";
 import { useCartStore } from '@/store/CartStore';
 
 
 export function Header() {
     const [isCartOpen, setIsCartOpen] = useState(false);
-    const [cartItemsCount, setCartItemsCount] = useState(0); // Estado local para manejar la cantidad de ítems en el carrito
+    const [cartItemsCount, setCartItemsCount] = useState(0);
 
     const toggleCart = () => setIsCartOpen(!isCartOpen);
 
-    // Obtener el estado del carrito desde el store
     const cart = useCartStore((state) => state.cart);
 
-    // Actualizar la cantidad de ítems en el carrito después de que el componente se haya montado
     useEffect(() => {
         setCartItemsCount(cart.reduce((total, item) => total + item.quantity, 0));
     }, [cart]);
@@ -33,13 +31,13 @@ export function Header() {
                 </Link>
             </div>
             <div className="flex flex-1 justify-end items-center space-x-4 relative">
-                <FaUser className="text-black text-2xl" />
+                {/* PopoverUser reemplaza el icono FaUser para manejar el popover */}
+                <PopoverUser />
                 <div className="relative">
                     <FaShoppingCart
                         className="text-black text-2xl cursor-pointer"
                         onClick={toggleCart}
                     />
-                    {/* Mostrar el globo solo si hay productos en el carrito */}
                     {cartItemsCount > 0 && (
                         <span className="absolute -top-3 -right-3 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full">
                             {cartItemsCount}

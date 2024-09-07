@@ -3,6 +3,10 @@
 import { AuthBaseForm } from './AuthBaseForm';
 import { z } from 'zod';
 import { SubmitHandler } from 'react-hook-form';
+import { registerUser } from '@/services/authService';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
+import { useAuthStore } from '@/store/authStore';
 
 // Esquema de validación para registro
 const registerSchema = z
@@ -29,9 +33,17 @@ const registerSchema = z
 type RegisterInputs = z.infer<typeof registerSchema>;
 
 export const RegisterForm = () => {
-    const handleRegister: SubmitHandler<RegisterInputs> = (data: RegisterInputs) => {
-        console.log('Registrando usuario:', data);
-        // Lógica para registrar al usuario con Firebase u otro servicio
+    const router = useRouter();
+
+    const handleRegister: SubmitHandler<RegisterInputs> = async (data) => {
+        try {
+            await registerUser(data.email, data.password);
+            useAuthStore.getState().setAuthenticated(true); // Actualiza el estado a autenticado
+            toast.success('Registro exitoso');
+            router.push('/');
+        } catch (error) {
+            toast.error('Error al registrarse: ' + (error as Error).message);
+        }
     };
 
     return (

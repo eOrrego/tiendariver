@@ -2,7 +2,11 @@
 
 import { AuthBaseForm } from './AuthBaseForm';
 import { z } from 'zod';
-import { SubmitHandler } from 'react-hook-form'; // Import the SubmitHandler type
+import { SubmitHandler } from 'react-hook-form';
+import { loginUser } from '@/services/authService';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
+import { useAuthStore } from '@/store/authStore';
 
 // Esquema de validación para inicio de sesión
 const loginSchema = z.object({
@@ -13,9 +17,17 @@ const loginSchema = z.object({
 type LoginInputs = z.infer<typeof loginSchema>;
 
 export const LoginForm = () => {
-    const handleLogin: SubmitHandler<LoginInputs> = (data) => {
-        console.log('Iniciando sesión:', data);
-        // Lógica para iniciar sesión con Firebase u otro servicio
+    const router = useRouter();
+
+    const handleLogin: SubmitHandler<LoginInputs> = async (data) => {
+        try {
+            await loginUser(data.email, data.password);
+            useAuthStore.getState().setAuthenticated(true); // Actualiza el estado a autenticado
+            toast.success('Inicio de sesión exitoso');
+            router.push('/');
+        } catch (error) {
+            toast.error('Error al iniciar sesión: ' + (error as Error).message);
+        }
     };
 
     return (

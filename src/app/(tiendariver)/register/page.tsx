@@ -1,9 +1,20 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAuthStore } from '@/store/authStore';
 import { RegisterForm } from '@/components/ui/form/RegisterForm';
 
 const RegisterPage = () => {
+    const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+    const router = useRouter();
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            router.push('/'); // Redirige si el usuario ya está autenticado
+        }
+    }, [isAuthenticated, router]);
+
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
             <div className="w-full max-w-lg bg-white p-8 rounded shadow-md">

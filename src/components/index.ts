@@ -25,3 +25,8 @@ export * from "./products/product-detail/ProductDetail";
 
 export * from "./cart/cart-list/CartList";
 export * from "./cart/cart-summary/CartSummary";
+
+export * from "./ui/form/FormInput";
+export * from "./ui/form/AuthBaseForm";
+export * from "./ui/form//FormInput";
+export * from "./ui/form/RegisterForm";

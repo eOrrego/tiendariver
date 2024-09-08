@@ -11,6 +11,7 @@ interface AuthState {
     logout: () => void;
 }
 
+// Creación del store de autenticación con persistencia en localStorage
 export const useAuthStore = create<AuthState>()(
     persist(
         (set) => ({

@@ -18,11 +18,14 @@ type LoginInputs = z.infer<typeof loginSchema>;
 
 export const LoginForm = () => {
     const router = useRouter();
+    const { setAuthenticated, setUser, setRole } = useAuthStore();
 
     const handleLogin: SubmitHandler<LoginInputs> = async (data) => {
         try {
-            await loginUser(data.email, data.password);
-            useAuthStore.getState().setAuthenticated(true); // Actualiza el estado a autenticado
+            const user = await loginUser(data.email, data.password);
+            setAuthenticated(true);
+            setUser(user);
+            setRole((user as any).role); // Ahora obtenemos el rol desde Firestore
             toast.success('Inicio de sesión exitoso');
             router.push('/');
         } catch (error) {

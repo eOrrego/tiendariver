@@ -4,6 +4,7 @@ import { AuthBaseForm } from './AuthBaseForm';
 import { z } from 'zod';
 import { SubmitHandler } from 'react-hook-form';
 import { registerUser } from '@/services/authService';
+import { saveUserToFirestore } from '@/services/userService';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store/authStore';
@@ -37,10 +38,21 @@ export const RegisterForm = () => {
 
     const handleRegister: SubmitHandler<RegisterInputs> = async (data) => {
         try {
-            await registerUser(data.email, data.password);
-            useAuthStore.getState().setAuthenticated(true); // Actualiza el estado a autenticado
-            toast.success('Registro exitoso');
-            router.push('/');
+            // Registrar al usuario en Firebase Auth
+            const user = await registerUser(data.email, data.password);
+            if (user) {
+                // Guardar los datos adicionales del usuario en Firestore
+                await saveUserToFirestore(user.uid, {
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    birthDate: data.birthDate,
+                    email: data.email,
+                    role: 'user', // Se establece el rol por defecto, ajustar según el caso
+                });
+                useAuthStore.getState().setAuthenticated(true); // Actualiza el estado a autenticado
+                toast.success('Registro exitoso');
+                router.push('/');
+            }
         } catch (error) {
             toast.error('Error al registrarse: ' + (error as Error).message);
         }

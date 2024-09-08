@@ -6,7 +6,7 @@ import { useAuthStore } from '@/store/authStore';
 import { LoginForm } from '@/components/ui/form/LoginForm';
 
 const LoginPage = () => {
-    const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+    const { isAuthenticated } = useAuthStore((state) => ({ isAuthenticated: state.isAuthenticated }));
     const router = useRouter();
 
     useEffect(() => {

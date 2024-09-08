@@ -1,5 +1,5 @@
 import { auth } from '@/config/firebaseConfig';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
 
 // Función para registrar un nuevo usuario
 export const registerUser = async (email: string, password: string) => {
@@ -19,4 +19,26 @@ export const loginUser = async (email: string, password: string) => {
     } catch (error) {
         throw new Error((error as Error).message);
     }
+};
+
+// Función para cerrar sesión
+export const logoutUser = async () => {
+    try {
+        await signOut(auth);
+    } catch (error) {
+        throw new Error((error as Error).message);
+    }
+};
+
+// Función para obtener el usuario actual
+export const getCurrentUser = () => {
+    return new Promise((resolve, reject) => {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                resolve(user);
+            } else {
+                reject(new Error('No user logged in'));
+            }
+        });
+    });
 };

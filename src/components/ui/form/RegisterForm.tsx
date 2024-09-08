@@ -4,7 +4,6 @@ import { AuthBaseForm } from './AuthBaseForm';
 import { z } from 'zod';
 import { SubmitHandler } from 'react-hook-form';
 import { registerUser } from '@/services/authService';
-import { saveUserToFirestore } from '@/services/userService';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store/authStore';
@@ -35,24 +34,21 @@ type RegisterInputs = z.infer<typeof registerSchema>;
 
 export const RegisterForm = () => {
     const router = useRouter();
+    const { setAuthenticated, setUser, setRole } = useAuthStore();
 
     const handleRegister: SubmitHandler<RegisterInputs> = async (data) => {
         try {
-            // Registrar al usuario en Firebase Auth
-            const user = await registerUser(data.email, data.password);
-            if (user) {
-                // Guardar los datos adicionales del usuario en Firestore
-                await saveUserToFirestore(user.uid, {
-                    firstName: data.firstName,
-                    lastName: data.lastName,
-                    birthDate: data.birthDate,
-                    email: data.email,
-                    role: 'user', // Se establece el rol por defecto, ajustar según el caso
-                });
-                useAuthStore.getState().setAuthenticated(true); // Actualiza el estado a autenticado
-                toast.success('Registro exitoso');
-                router.push('/');
-            }
+            const user = await registerUser(data.email, data.password, {
+                firstName: data.firstName,
+                lastName: data.lastName,
+                birthDate: data.birthDate,
+                role: 'user', // Establece rol por defecto como usuario normal
+            });
+            setAuthenticated(true);
+            setUser(user);
+            setRole('user');
+            toast.success('Registro exitoso');
+            router.push('/');
         } catch (error) {
             toast.error('Error al registrarse: ' + (error as Error).message);
         }

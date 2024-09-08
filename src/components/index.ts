@@ -30,3 +30,8 @@ export * from "./ui/form/FormInput";
 export * from "./ui/form/AuthBaseForm";
 export * from "./ui/form//FormInput";
 export * from "./ui/form/RegisterForm";
+
+export * from "./profile/user-welcome/UserWelcome";
+export * from "./profile/sidebar/Sidebar";
+export * from "./profile/profile-details/ProfileDetails";
+export * from "./profile/newsletter-subscription/NewsletterSubscription";

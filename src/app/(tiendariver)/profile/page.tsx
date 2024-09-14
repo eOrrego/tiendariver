@@ -1,27 +1,27 @@
 'use client';
 
-import React from 'react';
+import { Suspense } from 'react';
 import { useAuthStore } from '@/store/authStore';
-import { NewsletterSubscription, ProfileDetails, Sidebar, UserWelcome } from '@/components';
-
+import { NewsletterSubscription, ProfileDetails, UserWelcome } from '@/components';
+import ProfileLoading from './loading';
 
 const UserProfilePage = () => {
     const { user, role } = useAuthStore();
 
     return (
-        <div className="min-h-screen bg-gray-100">
-            <header className="bg-white p-4 shadow-md">
-                <h1 className="text-2xl font-bold text-center">Mi cuenta</h1>
-            </header>
-            <div className="container mx-auto flex">
-                <Sidebar role={role} />
-                <main className="flex-1 p-6">
-                    <UserWelcome name={user?.firstName} role={role} />
-                    <ProfileDetails user={user} />
-                    <NewsletterSubscription />
-                </main>
+        <Suspense fallback={<ProfileLoading />}>
+            <div className="flex flex-col gap-6">
+                <UserWelcome name={user?.firstName ?? 'Guest'} role={role} />
+                <ProfileDetails user={{
+                    firstName: user?.firstName ?? '',
+                    lastName: user?.lastName ?? '',
+                    email: user?.email ?? '',
+                    birthDate: user?.birthDate ?? ''
+                }} />
+                <NewsletterSubscription />
             </div>
-        </div>
+        </Suspense>
+
     );
 };
 

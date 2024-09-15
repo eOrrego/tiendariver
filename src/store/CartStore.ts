@@ -3,7 +3,8 @@
 import { create } from 'zustand';
 
 // Definición de la interfaz del producto en el carrito
-interface CartProduct {
+export interface CartProduct {
+    subtotal: number;
     id: string;
     title: string;
     price: number;

@@ -1,8 +1,8 @@
+// src/components/checkout/PaymentForm.tsx
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useCheckoutStore } from '@/store/CheckoutStore';
-import { useCartStore } from '@/store/CartStore'; // Importar datos del carrito
 import { addDoc, collection } from 'firebase/firestore';
 import { db } from '@/config/firebaseConfig';
 
@@ -11,18 +11,8 @@ interface PaymentFormProps {
 }
 
 export const PaymentForm: React.FC<PaymentFormProps> = ({ onBack }) => {
-    const { paymentData, setPaymentData, personalData, deliveryData, clearCheckoutData, setCartProducts } = useCheckoutStore();
-    const { cart } = useCartStore(); // Obtener los productos del carrito
+    const { paymentData, setPaymentData, personalData, deliveryData, cartProducts, clearCheckoutData } = useCheckoutStore();
     const [formData, setFormData] = useState(paymentData);
-
-    useEffect(() => {
-        // Actualizar productos del carrito en el CheckoutStore
-        const formattedCart = cart.map((item) => ({
-            ...item,
-            subtotal: item.price * item.quantity, // Calcula subtotal por producto
-        }));
-        setCartProducts(formattedCart);
-    }, [cart, setCartProducts]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -30,27 +20,19 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({ onBack }) => {
 
     const handlePayment = async () => {
         try {
-            // Calcula el total de la orden
-            const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+            const total = cartProducts.reduce((acc, item) => acc + item.subtotal, 0);
 
-            // Guardar datos de la orden en Firestore
             await addDoc(collection(db, 'orders'), {
                 personalData,
                 deliveryData,
                 paymentData: formData,
-                cartProducts: cart.map(item => ({
-                    id: item.id,
-                    title: item.title,
-                    size: item.size,
-                    price: item.price,
-                    quantity: item.quantity,
-                    subtotal: item.price * item.quantity,
-                })),
+                cartProducts,
                 total,
                 createdAt: new Date(),
             });
+
             alert('Pago realizado con éxito y orden guardada.');
-            clearCheckoutData(); // Limpia el estado del checkout después de guardar la orden
+            clearCheckoutData();
         } catch (error) {
             console.error('Error al guardar la orden:', error);
             alert('Error al procesar el pago.');

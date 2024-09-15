@@ -2,6 +2,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useCheckoutStore } from '@/store/CheckoutStore';
 import { addDoc, collection } from 'firebase/firestore';
 import { db } from '@/config/firebaseConfig';
@@ -11,8 +12,9 @@ interface PaymentFormProps {
 }
 
 export const PaymentForm: React.FC<PaymentFormProps> = ({ onBack }) => {
-    const { paymentData, setPaymentData, personalData, deliveryData, cartProducts, clearCheckoutData } = useCheckoutStore();
+    const { paymentData, setPaymentData, personalData, deliveryData, cartProducts } = useCheckoutStore();
     const [formData, setFormData] = useState(paymentData);
+    const router = useRouter();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -20,23 +22,27 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({ onBack }) => {
 
     const handlePayment = async () => {
         try {
-            const total = cartProducts.reduce((acc, item) => acc + item.subtotal, 0);
-
+            // Guarda la orden en Firestore (ya implementado en tu código)
             await addDoc(collection(db, 'orders'), {
                 personalData,
                 deliveryData,
                 paymentData: formData,
                 cartProducts,
-                total,
                 createdAt: new Date(),
             });
 
+            // Setea el flag para permitir acceso a la confirmación
+            sessionStorage.setItem('cameFromCheckout', 'true');
+
             alert('Pago realizado con éxito y orden guardada.');
-            clearCheckoutData();
+
+            // Redirige a la página de confirmación
+            router.push('/checkout/confirmation');
         } catch (error) {
             console.error('Error al guardar la orden:', error);
             alert('Error al procesar el pago.');
         }
+
     };
 
     const handleSubmit = () => {

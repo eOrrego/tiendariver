@@ -1,5 +1,7 @@
+// src/store/CheckoutStore.ts
 import { create } from 'zustand';
-import { useCartStore } from './CartStore'; // Importa el store del carrito para acceder a sus datos
+import { persist } from 'zustand/middleware';
+import { CartProduct } from './CartStore'; // Asegúrate de importar correctamente el tipo CartProduct
 
 interface PersonalData {
     email: string;
@@ -22,15 +24,6 @@ interface PaymentData {
     securityCode: string;
 }
 
-interface CartProduct {
-    id: string;
-    title: string;
-    size: string;
-    price: number;
-    quantity: number;
-    subtotal: number; // Calculamos subtotal por producto
-}
-
 interface CheckoutState {
     personalData: PersonalData;
     deliveryData: DeliveryData;
@@ -43,32 +36,9 @@ interface CheckoutState {
     clearCheckoutData: () => void;
 }
 
-export const useCheckoutStore = create<CheckoutState>((set) => ({
-    personalData: {
-        email: '',
-        firstName: '',
-        lastName: '',
-        dni: '',
-        phone: '',
-    },
-    deliveryData: {
-        postalCode: '',
-        deliveryMethod: '',
-        address: '',
-    },
-    paymentData: {
-        cardNumber: '',
-        cardHolder: '',
-        expiryDate: '',
-        securityCode: '',
-    },
-    cartProducts: [], // Añadimos la lista de productos del carrito
-    setPersonalData: (data) => set({ personalData: data }),
-    setDeliveryData: (data) => set({ deliveryData: data }),
-    setPaymentData: (data) => set({ paymentData: data }),
-    setCartProducts: (products) => set({ cartProducts: products }),
-    clearCheckoutData: () =>
-        set({
+export const useCheckoutStore = create<CheckoutState>()(
+    persist(
+        (set) => ({
             personalData: {
                 email: '',
                 firstName: '',
@@ -88,5 +58,38 @@ export const useCheckoutStore = create<CheckoutState>((set) => ({
                 securityCode: '',
             },
             cartProducts: [],
+
+            setPersonalData: (data) => set({ personalData: data }),
+            setDeliveryData: (data) => set({ deliveryData: data }),
+            setPaymentData: (data) => set({ paymentData: data }),
+            setCartProducts: (products) => set({ cartProducts: products }),
+
+            clearCheckoutData: () =>
+                set({
+                    personalData: {
+                        email: '',
+                        firstName: '',
+                        lastName: '',
+                        dni: '',
+                        phone: '',
+                    },
+                    deliveryData: {
+                        postalCode: '',
+                        deliveryMethod: '',
+                        address: '',
+                    },
+                    paymentData: {
+                        cardNumber: '',
+                        cardHolder: '',
+                        expiryDate: '',
+                        securityCode: '',
+                    },
+                    cartProducts: [],
+                }),
         }),
-}));
+        {
+            name: 'checkout-storage', // Nombre del key en localStorage
+            getStorage: () => localStorage, // Define el almacenamiento en localStorage
+        }
+    )
+);

@@ -1,5 +1,3 @@
-'use client';
-
 import { create } from 'zustand';
 
 // Definición de la interfaz del producto en el carrito

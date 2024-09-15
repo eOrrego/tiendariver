@@ -35,3 +35,8 @@ export * from "./profile/user-welcome/UserWelcome";
 export * from "./profile/sidebar/Sidebar";
 export * from "./profile/profile-details/ProfileDetails";
 export * from "./profile/newsletter-subscription/NewsletterSubscription";
+
+export * from "./checkout/personal-data-form/PersonalDataForm";
+export * from "./checkout/delivery-form/DeliveryForm";
+export * from "./checkout/payment-form/PaymentForm";
+export * from "./checkout/checkout-summary/CheckoutSummary";

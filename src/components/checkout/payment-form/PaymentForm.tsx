@@ -34,7 +34,10 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({ onBack }) => {
                 deliveryData,
                 paymentData: formData,
                 cartProducts,
-                userId: user.uid, // Añadir el ID del usuario logueado
+                userId: user.uid,
+                userEmail: user.email,
+                createdAt: new Date(),
+                id: ''
             });
 
             // Setea el flag para permitir acceso a la confirmación

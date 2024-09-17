@@ -1,7 +1,6 @@
-// src/app/(tiendariver)/confirmation/page.tsx
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCheckoutStore } from '@/store/CheckoutStore';
 import { useCartStore } from '@/store/CartStore';
@@ -11,23 +10,25 @@ const ConfirmationPage = () => {
     const { clearCheckoutData, cartProducts } = useCheckoutStore();
     const { clearCart } = useCartStore();
 
-    useEffect(() => {
-        // // Validar si el usuario viene desde el checkout
-        // const cameFromCheckout = sessionStorage.getItem('cameFromCheckout');
-
-        // if (!cameFromCheckout || !cartProducts.length) {
-        //     // Redirige si no viene del checkout o si el carrito está vacío
-        //     router.push('/');
-        //     return;
-        // }
-
-        // Limpiar datos del checkout y carrito solo una vez
+    // Memoriza las funciones para evitar redefiniciones
+    const handleClearData = useCallback(() => {
         clearCheckoutData();
         clearCart();
+    }, [clearCheckoutData, clearCart]);
 
-        // Remueve el flag después de la limpieza para prevenir acceso directo en el futuro
-        // sessionStorage.removeItem('cameFromCheckout');
-    }, [clearCheckoutData, clearCart, cartProducts.length, router]);
+    useEffect(() => {
+        const cameFromCheckout = sessionStorage.getItem('cameFromCheckout');
+
+        if (!cameFromCheckout || !cartProducts.length) {
+            router.push('/');
+            return;
+        }
+
+        // Limpiar datos solo si vino del checkout y hay productos en el carrito
+        handleClearData();
+
+        sessionStorage.removeItem('cameFromCheckout');
+    }, [cartProducts.length, handleClearData, router]);
 
     return (
         <div className="container mx-auto p-6">

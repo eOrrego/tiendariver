@@ -40,3 +40,5 @@ export * from "./checkout/personal-data-form/PersonalDataForm";
 export * from "./checkout/delivery-form/DeliveryForm";
 export * from "./checkout/payment-form/PaymentForm";
 export * from "./checkout/checkout-summary/CheckoutSummary";
+
+export * from "./profile/orders/Orders";

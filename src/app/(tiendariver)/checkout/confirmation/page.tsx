@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCheckoutStore } from '@/store/CheckoutStore';
 import { useCartStore } from '@/store/CartStore';
@@ -9,6 +9,7 @@ const ConfirmationPage = () => {
     const router = useRouter();
     const { clearCheckoutData, cartProducts } = useCheckoutStore();
     const { clearCart } = useCartStore();
+    const [isValidAccess, setIsValidAccess] = useState(false);
 
     // Memoriza las funciones para evitar redefiniciones
     const handleClearData = useCallback(() => {
@@ -19,16 +20,25 @@ const ConfirmationPage = () => {
     useEffect(() => {
         const cameFromCheckout = sessionStorage.getItem('cameFromCheckout');
 
+        // Validar si el usuario viene desde el checkout y si hay productos en el carrito
         if (!cameFromCheckout || !cartProducts.length) {
             router.push('/');
-            return;
+        } else {
+            // Permitir el acceso a la página de confirmación
+            setIsValidAccess(true);
+
+            // Limpiar datos solo si vino del checkout y hay productos en el carrito
+            handleClearData();
+
+            // Remueve el flag después de limpiar los datos
+            sessionStorage.removeItem('cameFromCheckout');
         }
-
-        // Limpiar datos solo si vino del checkout y hay productos en el carrito
-        handleClearData();
-
-        sessionStorage.removeItem('cameFromCheckout');
     }, [cartProducts.length, handleClearData, router]);
+
+    // Evitar mostrar contenido si el acceso no es válido
+    if (!isValidAccess) {
+        return null;
+    }
 
     return (
         <div className="container mx-auto p-6">

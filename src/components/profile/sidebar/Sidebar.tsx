@@ -27,7 +27,7 @@ export const Sidebar = ({ role }: { role: 'guest' | 'user' | 'admin' }) => {
 
     const menuItems: MenuItem[] = [
         { label: 'Perfil', href: '/profile' },
-        { label: 'Pedidos', href: '/orders' },
+        { label: 'Pedidos', href: '/profile/orders' }, // Enlace a la página de órdenes
         ...(role === 'admin' ? [{ label: 'Administración', href: '/admin' }] : []),
         { label: 'Salir', action: () => { handleLogout(); } },
     ];

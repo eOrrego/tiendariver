@@ -4,8 +4,8 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCheckoutStore } from '@/store/CheckoutStore';
-import { addDoc, collection } from 'firebase/firestore';
-import { db } from '@/config/firebaseConfig';
+import { useAuthStore } from '@/store/authStore';
+import { createOrder } from '@/services/orderService'; // Importa el nuevo servicio
 
 interface PaymentFormProps {
     onBack: () => void;
@@ -13,6 +13,7 @@ interface PaymentFormProps {
 
 export const PaymentForm: React.FC<PaymentFormProps> = ({ onBack }) => {
     const { paymentData, setPaymentData, personalData, deliveryData, cartProducts } = useCheckoutStore();
+    const { user } = useAuthStore(); // Obtener el usuario logueado desde el store
     const [formData, setFormData] = useState(paymentData);
     const router = useRouter();
 
@@ -21,14 +22,19 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({ onBack }) => {
     };
 
     const handlePayment = async () => {
+        if (!user) {
+            alert('Debes estar logueado para realizar el pago.');
+            return;
+        }
+
         try {
-            // Guarda la orden en Firestore (ya implementado en tu código)
-            await addDoc(collection(db, 'orders'), {
+            // Crea la orden usando el servicio y pasa los datos necesarios incluyendo el ID del usuario
+            await createOrder({
                 personalData,
                 deliveryData,
                 paymentData: formData,
                 cartProducts,
-                createdAt: new Date(),
+                userId: user.uid, // Añadir el ID del usuario logueado
             });
 
             // Setea el flag para permitir acceso a la confirmación
@@ -42,7 +48,6 @@ export const PaymentForm: React.FC<PaymentFormProps> = ({ onBack }) => {
             console.error('Error al guardar la orden:', error);
             alert('Error al procesar el pago.');
         }
-
     };
 
     const handleSubmit = () => {

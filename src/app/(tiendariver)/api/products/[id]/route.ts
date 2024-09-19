@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { db } from '@/config/firebaseConfig';
 import { Product } from '@/types/product.interface';
+import { verifyAdminRole } from '@/middleware/authMiddleware';
 
 
 export async function GET(req: Request, { params }: { params: { id: string } }) {
@@ -42,6 +43,10 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
 }
 
 export async function PUT(req: Request, { params }: { params: { id: string } }) {
+    // Verificar si el usuario es administrador
+    const adminCheck = await verifyAdminRole(req);
+    if (adminCheck) return adminCheck;  // Si no es admin, retorna la respuesta del middleware
+
     try {
         const body = await req.json();
         const product: Product = body;
@@ -81,6 +86,10 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
 }
 
 export async function DELETE(req: Request, { params }: { params: { id: string } }) {
+    // Verificar si el usuario es administrador
+    const adminCheck = await verifyAdminRole(req);
+    if (adminCheck) return adminCheck;  // Si no es admin, retorna la respuesta del middleware
+
     try {
         // Verificar si el ID del producto es válido
         if (!params.id) {

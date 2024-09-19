@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { addDoc, collection, getDocs } from 'firebase/firestore';
 import { db } from '@/config/firebaseConfig';
 import { Product } from '@/types/product.interface';
+import { verifyAdminRole } from '@/middleware/authMiddleware';
 
 export async function GET() {
     try {
@@ -33,6 +34,10 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
+    // Verificar si el usuario es administrador
+    const adminCheck = await verifyAdminRole(req);
+    if (adminCheck) return adminCheck;  // Si no es admin, retorna la respuesta del middleware
+
     try {
         const body = await req.json();
         const product: Product = body;
